@@ -45,22 +45,22 @@ public class EchoApplication {
         System.out.println("event: " + event);
         String originalMessageText = event.getMessage().getText();
 		String replyText = "";
-        if(originalMessageText.equals("boss")){
+        if(originalMessageText.equalsIgnoreCase("boss")){
 			modeBoss=true;
 			replyText="random text s";
         }
-		else if(originalMessageText.equals("noboss")){
+		else if(originalMessageText.equalsIgnoreCase("noboss")){
 			modeBoss=false;
 			replyText="OK";
 		}
 		else {
 			if(modeBoss==false){
 				String inputs[]=originalMessageText.split(" ");
-				if(inputs[0].equals("save")){
+				if(inputs[0].equalsIgnoreCase("save")){
 						hm.put(inputs[1],inputs[2]);
 						replyText="OK";
 				}
-				else if(inputs[0].equals("load")){
+				else if(inputs[0].equalsIgnoreCase("load")){
 					if(hm.get(inputs[1])!=null){
 						replyText=hm.get(inputs[1]);
 					}
