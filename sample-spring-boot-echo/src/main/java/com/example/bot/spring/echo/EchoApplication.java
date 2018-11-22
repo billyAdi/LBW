@@ -28,20 +28,29 @@ import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 
 import java.util.HashMap;
-
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 @SpringBootApplication
 @LineMessageHandler
 public class EchoApplication {
+	static String url = "jdbc:postgresql://ec2-23-21-201-12.compute-1.amazonaws.com:5432/d30c1p51b5n66d?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory";
+    static String username = "dgeubljqajtwts";
+    static String password = "e0a0cdda3f83ef1c2c4af51786f2c636f4253640dac0681e786ad8c2a3031c75";
+	
 	boolean modeBoss;
 	HashMap<String, String> hm = new HashMap<String, String>();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws URISyntaxException{
         SpringApplication.run(EchoApplication.class, args);
     }
 
     @EventMapping
-    public Message handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
+    public Message handleTextMessageEvent(MessageEvent<TextMessageContent> event) throws URISyntaxException{
         System.out.println("event: " + event);
         String originalMessageText = event.getMessage().getText();
 		String replyText = "";
@@ -67,6 +76,14 @@ public class EchoApplication {
 				}
 			}
 		}
+		Connection conn = null;
+		try {
+            conn = DriverManager.getConnection(url, username, password);
+			replyText+=" koneksi berhasil";
+        } catch (SQLException e) {
+            replyText+=" koneksi gagal";
+        }
+		
         return new TextMessage(replyText);
     }
 
