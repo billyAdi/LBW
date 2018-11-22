@@ -43,7 +43,7 @@ public class EchoApplication {
     static String password = "e0a0cdda3f83ef1c2c4af51786f2c636f4253640dac0681e786ad8c2a3031c75";
 	
 	boolean modeBoss;
-	//HashMap<String, String> hm = new HashMap<String, String>();
+	HashMap<String, String> hm = new HashMap<String, String>();
 
     public static void main(String[] args){
         SpringApplication.run(EchoApplication.class, args);
@@ -68,15 +68,19 @@ public class EchoApplication {
 				String inputs[]=originalMessageText.split(" ");
 				if(inputs[0].equalsIgnoreCase("save")){
 						//hm.put(inputs[1],inputs[2]);
-						saveData(inputs[1],inputs[2],userId);
+						saveChat(inputs[1],inputs[2],userId);
 						replyText="OK";
 				}
 				else if(inputs[0].equalsIgnoreCase("load")){
-					if(hm.get(inputs[1])!=null){
-						
-						//replyText=hm.get(inputs[1]);
+					if(!getData(inputs[1],userId).equals("")){
 						replyText = getData(inputs[1],userId);
 					}
+					
+					//if(hm.get(inputs[1])!=null){
+						
+						//replyText=hm.get(inputs[1]);
+						//replyText = getData(inputs[1],userId);
+					//}
 				}
 			}
 		}
