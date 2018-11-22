@@ -80,6 +80,7 @@ public class EchoApplication {
 		try {
             conn = DriverManager.getConnection(url, username, password);
 			replyText+=" koneksi berhasil";
+			conn.close();
         } catch (SQLException e) {
             replyText+=" koneksi gagal";
         }
